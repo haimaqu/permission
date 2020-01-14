@@ -1,5 +1,6 @@
 package com.mmall.common;
 
+import com.mmall.exception.ParamException;
 import com.mmall.exception.PermissionException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -25,7 +26,7 @@ public class SpringExceptionResolver implements HandlerExceptionResolver {
         // 只有当抛出的异常为自己定义的异常，我们才认为他的msg是要直接给用户的，否则我们的异常都需要是要默认msg来代替
         // 这里我们要求项目中所有请求json数据，都使用.json结尾
         if (url.endsWith(".json")) {
-            if (ex instanceof PermissionException) {
+            if (ex instanceof PermissionException || ex instanceof ParamException) {
                 JsonData result = JsonData.fail(ex.getMessage());
                 mv = new ModelAndView("jsonView", result.toMap());
             } else {
