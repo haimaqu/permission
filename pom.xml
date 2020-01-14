@@ -119,6 +119,14 @@
       <artifactId>lombok</artifactId>
       <version>1.18.8</version>
     </dependency>
+    <!-- jsp api -->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>6.0.36</version>
+    </dependency>
+
+
 
 
   </dependencies>

@@ -29,7 +29,7 @@
     <!-- 让定义好的@RequestMapping注解找到对应的接口进行处理，相当于告诉请求去使用什么样的代码来处理 -->
     <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />-->
 
-    <!--<bean class="com.mmall.common.SpringExceptionResolver" />-->
+    <bean class="com.mmall.common.SpringExceptionResolver" />
     <!-- 当请求来后，我以什么样的数据格式返回给它 -->
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
     <!-- 以json返回的时候用这个类处理 -->
