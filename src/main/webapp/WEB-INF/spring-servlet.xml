@@ -24,7 +24,7 @@
     <!--<mvc:resources location="/assets/" mapping="/assets/**"/>-->
     <!--<mvc:resources location="/ztree/" mapping="/ztree/**"/>-->
 
-    <!--<bean class="com.mmall.common.ApplicationContextHelper" lazy-init="false" />-->
+    <bean class="com.mmall.common.ApplicationContextHelper" lazy-init="false" />
 
     <!-- 让定义好的@RequestMapping注解找到对应的接口进行处理，相当于告诉请求去使用什么样的代码来处理 -->
     <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />-->

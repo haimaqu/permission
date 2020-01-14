@@ -2,11 +2,15 @@ package com.mmall.controller;
 import	java.util.Map;
 
 
+import com.mmall.common.ApplicationContextHelper;
 import com.mmall.common.JsonData;
+import com.mmall.dao.SysAclModuleMapper;
 import com.mmall.exception.ParamException;
 import com.mmall.exception.PermissionException;
+import com.mmall.model.SysAclModule;
 import com.mmall.param.TestVo;
 import com.mmall.util.BeanValidator;
+import com.mmall.util.JsonMapper;
 import jdk.nashorn.internal.scripts.JD;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
@@ -44,6 +48,11 @@ public class TestController {
 //        } catch (Exception e) {
 //
 //        }
+
+        SysAclModuleMapper moduleMapper = ApplicationContextHelper.popBean(SysAclModuleMapper.class);
+        SysAclModule model = moduleMapper.selectByPrimaryKey(1);
+        log.info(JsonMapper.obj2String(model));
+
         BeanValidator.check(vo);
         return JsonData.success("test validate");
     }
