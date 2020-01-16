@@ -33,6 +33,7 @@ public class SysTreeService {
 
         List<DeptLevelDto> dtoList = Lists.newArrayList();
         for (SysDept dept : deptList) {
+            // 当传入 SysDept 时，直接把他转换成当前（DeptLevelDto）的结构
             DeptLevelDto dto = DeptLevelDto.adapt(dept);
             dtoList.add(dto);
         }
