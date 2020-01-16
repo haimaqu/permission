@@ -88,7 +88,7 @@ public class SysDeptService {
 
 
     // 判断数据有没有重复
-    private boolean checkExist(Integer parentId, String deptName, Integer deptId) {
+      private boolean checkExist(Integer parentId, String deptName, Integer deptId) {
         return sysDeptMapper.countByNameAndParentId(parentId, deptName, deptId) > 0;
     }
 

@@ -1,7 +1,4 @@
 package com.mmall.controller;
-import	java.util.Map;
-
-
 import com.mmall.common.ApplicationContextHelper;
 import com.mmall.common.JsonData;
 import com.mmall.dao.SysAclModuleMapper;
@@ -11,9 +8,7 @@ import com.mmall.model.SysAclModule;
 import com.mmall.param.TestVo;
 import com.mmall.util.BeanValidator;
 import com.mmall.util.JsonMapper;
-import jdk.nashorn.internal.scripts.JD;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.MapUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +21,7 @@ public class TestController {
     @RequestMapping("/hello.json")
     @ResponseBody
     public JsonData hello(){
+        System.out.println(9999);
         log.info("hello");
 //        throw new RuntimeException("test exception");
         throw new PermissionException("test exception");
