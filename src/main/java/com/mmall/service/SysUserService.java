@@ -63,11 +63,17 @@ public class SysUserService {
 
     // 登录是使用手机号或邮箱进行的，同一部门下用户名可以相同，所以名字可以不用检查
     public boolean checkEmailExist(String mail, Integer userId) {
-        return false;
-//        return sysUserMapper.countByMail(mail, userId) > 0;
+        return sysUserMapper.countByMail(mail, userId) > 0;
     }
 
     public boolean checkTelephoneExist(String telephone, Integer userId) {
-        return false;
-//        return sysUserMapper.countByTelephone(telephone, userId) > 0;
-    }}
+        return sysUserMapper.countByTelephone(telephone, userId) > 0;
+    }
+
+    public SysUser finfByKey(String keyword) {
+        return sysUserMapper.findByKeyWord(keyword);
+    }
+
+
+
+}
