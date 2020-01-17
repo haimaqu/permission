@@ -4,6 +4,7 @@ package com.mmall.service;
 import com.google.common.base.Preconditions;
 import com.mmall.beans.PageQuery;
 import com.mmall.beans.PageResult;
+import com.mmall.common.RequestHolder;
 import com.mmall.dao.SysUserMapper;
 import com.mmall.exception.ParamException;
 import com.mmall.model.SysUser;
@@ -37,7 +38,8 @@ public class SysUserService {
         String encryptedPassword = MD5Util.encrypt(password);
         SysUser user = SysUser.builder().username(param.getUsername()).telephone(param.getTelephone()).mail(param.getMail())
                 .password(encryptedPassword).deptId(param.getDeptId()).status(param.getStatus()).remark(param.getRemark()).build();
-        user.setOperator("system");
+        user.setOperator(RequestHolder.getCurrentUser().getUsername());
+//        user.setOperator("system");
         user.setOperateIp("127.0.0.1");
         user.setOperateTime(new Date());
 
@@ -59,6 +61,11 @@ public class SysUserService {
         Preconditions.checkNotNull(before, "待更新的用户不存在");
         SysUser after = SysUser.builder().id(param.getId()).username(param.getUsername()).telephone(param.getTelephone()).mail(param.getMail())
                 .deptId(param.getDeptId()).status(param.getStatus()).remark(param.getRemark()).build();
+        after.setOperator(RequestHolder.getCurrentUser().getUsername());
+//        user.setOperator("system");
+        after.setOperateIp("127.0.0.1");
+        after.setOperateTime(new Date());
+
         // updateByPrimaryKeySelective是根据值进行更新的，有值才更新，所以after里password值没有的话，就不会更新，即可以不写password
         sysUserMapper.updateByPrimaryKeySelective(after);
 

@@ -39,10 +39,10 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        String url = request.getRequestURI().toString();
-        Map parameterMap = request.getParameterMap();
-        log.info("request finished. url:{},parameterMap:{}", url, JsonMapper.obj2String(parameterMap));
-
+//        String url = request.getRequestURI().toString();
+//        Map parameterMap = request.getParameterMap();
+//        log.info("request finished. url:{},parameterMap:{}", url, JsonMapper.obj2String(parameterMap));
+        removeThreadLocalInfo();
     }
 
     /**
@@ -58,6 +58,11 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
         String url = request.getRequestURI().toString();
         Map parameterMap = request.getParameterMap();
         log.info("request complete. url:{},parameterMap:{}", url, JsonMapper.obj2String(parameterMap));
-
+        removeThreadLocalInfo();
     }
+
+    public void removeThreadLocalInfo() {
+        RequestHolder.remove();
+    }
+
 }

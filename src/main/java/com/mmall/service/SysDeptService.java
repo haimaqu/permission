@@ -1,6 +1,7 @@
 package com.mmall.service;
 
 import com.google.common.base.Preconditions;
+import com.mmall.common.RequestHolder;
 import com.mmall.dao.SysDeptMapper;
 import com.mmall.exception.ParamException;
 import com.mmall.model.SysDept;
@@ -30,9 +31,9 @@ public class SysDeptService {
                 .seq(param.getSeq()).remark(param.getRemark()).build();
 
         dept.setLevel(LevelUtil.calculateLevel(getLevel(param.getParentId()), param.getParentId()));
-//        dept.setOperator(RequestHolder.getCurrentUser().getUsername());
+        dept.setOperator(RequestHolder.getCurrentUser().getUsername());
 //        dept.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
-        dept.setOperator("system");
+//        dept.setOperator("system");
         dept.setOperateIp("127.0.0.1");
         dept.setOperateTime(new Date());
         // insertSelective() 先进行判断，没有值的时候不进行处理，只插入有值的值
@@ -47,14 +48,15 @@ public class SysDeptService {
         }
         SysDept before = sysDeptMapper.selectByPrimaryKey(param.getId());
         Preconditions.checkNotNull(before, "待更新的部门不存在");
-//        if(checkExist(param.getParentId(), param.getName(), param.getId())) {
-//            throw new ParamException("同一层级下存在相同名称的部门");
-//        }
+        if(checkExist(param.getParentId(), param.getName(), param.getId())) {
+            throw new ParamException("同一层级下存在相同名称的部门");
+        }
 
         SysDept after = SysDept.builder().id(param.getId()).name(param.getName()).parentId(param.getParentId())
                 .seq(param.getSeq()).remark(param.getRemark()).build();
         after.setLevel(LevelUtil.calculateLevel(getLevel(param.getParentId()), param.getParentId()));
-        after.setOperator("system-update");
+        after.setOperator(RequestHolder.getCurrentUser().getUsername());
+//        after.setOperator("system-update");
         after.setOperateIp("127.0.0.1");
         after.setOperateTime(new Date());
 
