@@ -34,7 +34,8 @@
 <script type="text/javascript">
     var paginateTemplate = $("#paginateTemplate").html();
     Mustache.parse(paginateTemplate);
-    
+
+    //  total当前满足要求的行数有多少行，currentSize当前页返回结果有多少条，idElement 这些值放到页面的哪个元素里去
     function renderPage(url, total, pageNo, pageSize, currentSize, idElement, callback) {
         var maxPageNo = Math.ceil(total / pageSize);
         var paramStartChar = url.indexOf("?") > 0 ? "&" : "?";

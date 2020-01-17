@@ -19,8 +19,17 @@ public class UserController {
     @Resource
     private SysUserService sysUserService;
 
+    @RequestMapping("/logout.page")
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.getSession().invalidate();
+        String path = "signin.jsp";
+        response.sendRedirect(path);
+    }
+
+
     /**
-     * 这里只做页面的跳转
+     * 用户登录
+     * 这里做页面的跳转
      * @param request
      * @param response
      */
