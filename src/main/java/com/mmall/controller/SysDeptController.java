@@ -35,6 +35,7 @@ public class SysDeptController {
     public JsonData saveDept(DeptParam param) {
         sysDeptService.save(param);
         return JsonData.success();
+
     }
 
     @RequestMapping("/tree.json")

@@ -7,8 +7,9 @@ import com.mmall.model.SysDept;
 import java.util.List;
 
 
-@SuppressWarnings("ALL")
+
 public interface SysDeptMapper {
+
     int deleteByPrimaryKey(@Param("id") Integer id);
 
     // 插入所有字段
@@ -16,6 +17,7 @@ public interface SysDeptMapper {
 
     // 先进行判断，没有值的时候不进行处理，只插入有值的值
     int insertSelective(SysDept record);
+
 
     SysDept selectByPrimaryKey(@Param("id") Integer id);
 
