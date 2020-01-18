@@ -64,9 +64,12 @@ public class UserController {
                 // 会发送一个全新的request,将不再使用原先的request,因此不论在该方法执行之前,还是在该方法执行之后,对request操作,都是无效的.
                 // https://www.cnblogs.com/ysource/articles/10177315.html
                 response.sendRedirect("/admin/index.page");
+                // 加return 可以防止java.lang.IllegalStateException: Cannot forward after response has been committed
+                return;
             }
         }
 
+        // 如果当前用户无法登录
         request.setAttribute("error", errorMsg);
         request.setAttribute("username", username);
         if (StringUtils.isNotBlank(ret)) {
@@ -74,5 +77,8 @@ public class UserController {
         }
         String path = "signin.jsp";
         request.getRequestDispatcher(path).forward(request, response);
+
+        // 校验失败用response跳转时，会刷新页面，错误提示也就没了
+//        response.sendRedirect(path);
     }
 }

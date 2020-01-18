@@ -10,6 +10,7 @@ import com.mmall.exception.ParamException;
 import com.mmall.model.SysUser;
 import com.mmall.param.UserParam;
 import com.mmall.util.BeanValidator;
+import com.mmall.util.IpUtil;
 import com.mmall.util.MD5Util;
 import com.mmall.util.PasswordUtil;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class SysUserService {
                 .password(encryptedPassword).deptId(param.getDeptId()).status(param.getStatus()).remark(param.getRemark()).build();
         user.setOperator(RequestHolder.getCurrentUser().getUsername());
 //        user.setOperator("system");
-        user.setOperateIp("127.0.0.1");
+        user.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         user.setOperateTime(new Date());
 
         // TODO: sendEmail
@@ -63,7 +64,7 @@ public class SysUserService {
                 .deptId(param.getDeptId()).status(param.getStatus()).remark(param.getRemark()).build();
         after.setOperator(RequestHolder.getCurrentUser().getUsername());
 //        user.setOperator("system");
-        after.setOperateIp("127.0.0.1");
+        after.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         after.setOperateTime(new Date());
 
         // updateByPrimaryKeySelective是根据值进行更新的，有值才更新，所以after里password值没有的话，就不会更新，即可以不写password

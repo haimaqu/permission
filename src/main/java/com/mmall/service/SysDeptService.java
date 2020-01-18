@@ -7,6 +7,7 @@ import com.mmall.exception.ParamException;
 import com.mmall.model.SysDept;
 import com.mmall.param.DeptParam;
 import com.mmall.util.BeanValidator;
+import com.mmall.util.IpUtil;
 import com.mmall.util.LevelUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class SysDeptService {
         dept.setOperator(RequestHolder.getCurrentUser().getUsername());
 //        dept.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
 //        dept.setOperator("system");
-        dept.setOperateIp("127.0.0.1");
+        dept.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         dept.setOperateTime(new Date());
         // insertSelective() 先进行判断，没有值的时候不进行处理，只插入有值的值
         sysDeptMapper.insertSelective(dept);
@@ -57,7 +58,7 @@ public class SysDeptService {
         after.setLevel(LevelUtil.calculateLevel(getLevel(param.getParentId()), param.getParentId()));
         after.setOperator(RequestHolder.getCurrentUser().getUsername());
 //        after.setOperator("system-update");
-        after.setOperateIp("127.0.0.1");
+        after.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         after.setOperateTime(new Date());
 
 //        after.setOperator(RequestHolder.getCurrentUser().getUsername());
