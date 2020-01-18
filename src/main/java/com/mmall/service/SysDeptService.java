@@ -79,6 +79,7 @@ public class SysDeptService {
                 for (SysDept dept : deptList) {
                     String level = dept.getLevel();
                     if (level.indexOf(oldLevelPrefix) == 0) {
+                        // "unhappy".substring(2)   returns"happy"
                         level = newLevelPrefix + level.substring(oldLevelPrefix.length());
                         dept.setLevel(level);
                     }
