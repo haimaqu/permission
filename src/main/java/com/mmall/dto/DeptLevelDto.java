@@ -5,12 +5,11 @@ import com.mmall.model.SysDept;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.beans.BeanUtils;
-import sun.font.BidiUtils;
 
 import java.util.List;
 
 /**
- * dto包用来做适配用
+ * dto包 用来做适配用
  */
 @Data
 @ToString
