@@ -1,6 +1,8 @@
 package com.mmall.service;
 
 import com.google.common.base.Preconditions;
+import com.mmall.beans.PageQuery;
+import com.mmall.beans.PageResult;
 import com.mmall.common.RequestHolder;
 import com.mmall.dao.SysAclMapper;
 import com.mmall.exception.ParamException;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class SysAclService {
@@ -56,8 +59,7 @@ public class SysAclService {
     }
 
     public boolean checkExist(int aclModuleId, String name, Integer id) {
-        return false;
-//        return sysAclMapper.countByNameAndAclModuleId(aclModuleId, name, id) > 0;
+        return sysAclMapper.countByNameAndAclModuleId(aclModuleId, name, id) > 0;
     }
 
     public String generateCode() {
@@ -65,13 +67,13 @@ public class SysAclService {
         return dateFormat.format(new Date()) + "_" + (int)(Math.random() * 100);
     }
 
-//    public PageResult<SysAcl> getPageByAclModuleId(int aclModuleId, PageQuery page) {
-//        BeanValidator.check(page);
-//        int count = sysAclMapper.countByAclModuleId(aclModuleId);
-//        if (count > 0) {
-//            List<SysAcl> aclList = sysAclMapper.getPageByAclModuleId(aclModuleId, page);
-//            return PageResult.<SysAcl>builder().data(aclList).total(count).build();
-//        }
-//        return PageResult.<SysAcl>builder().build();
-//    }
+    public PageResult<SysAcl> getPageByAclModuleId(int aclModuleId, PageQuery page) {
+        BeanValidator.check(page);
+        int count = sysAclMapper.countByAclModuleId(aclModuleId);
+        if (count > 0) {
+            List<SysAcl> aclList = sysAclMapper.getPageByAclModuleId(aclModuleId, page);
+            return PageResult.<SysAcl>builder().data(aclList).total(count).build();
+        }
+        return PageResult.<SysAcl>builder().build();
+    }
 }
