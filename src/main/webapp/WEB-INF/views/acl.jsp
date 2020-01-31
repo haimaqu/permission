@@ -471,19 +471,19 @@
         }
 
         function loadAclList(aclModuleId) {
-            // var pageSize = $("#pageSize").val();
-            // var url = "/sys/acl/page.json?aclModuleId=" + aclModuleId;
-            // var pageNo = $("#aclPage .pageNo").val() || 1;
-            // $.ajax({
-            //     url : url,
-            //     data: {
-            //         pageSize: pageSize,
-            //         pageNo: pageNo
-            //     },
-            //     success: function (result) {
-            //         renderAclListAndPage(result, url);
-            //     }
-            // })
+            var pageSize = $("#pageSize").val();
+            var url = "/sys/acl/page.json?aclModuleId=" + aclModuleId;
+            var pageNo = $("#aclPage .pageNo").val() || 1;
+            $.ajax({
+                url : url,
+                data: {
+                    pageSize: pageSize,
+                    pageNo: pageNo
+                },
+                success: function (result) {
+                    renderAclListAndPage(result, url);
+                }
+            })
         }
 
         function renderAclListAndPage(result, url) {
@@ -530,24 +530,24 @@
         }
 
         function bindAclClick() {
-            $(".acl-role").click(function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                var aclId = $(this).attr("data-id");
-                $.ajax({
-                    url: "/sys/acl/acls.json",
-                    data: {
-                        aclId: aclId
-                    },
-                    success: function(result) {
-                        if (result.ret) {
-                            console.log(result)
-                        } else {
-                            showMessage("获取权限点分配的用户和角色", result.msg, false);
-                        }
-                    }
-                })
-            });
+            // $(".acl-role").click(function (e) {
+            //     e.preventDefault();
+            //     e.stopPropagation();
+            //     var aclId = $(this).attr("data-id");
+            //     $.ajax({
+            //         url: "/sys/acl/acls.json",
+            //         data: {
+            //             aclId: aclId
+            //         },
+            //         success: function(result) {
+            //             if (result.ret) {
+            //                 console.log(result)
+            //             } else {
+            //                 showMessage("获取权限点分配的用户和角色", result.msg, false);
+            //             }
+            //         }
+            //     })
+            // });
             $(".acl-edit").click(function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -561,6 +561,7 @@
                         recursiveRenderAclModuleSelect(aclModuleList, 1);
                         $("#aclForm")[0].reset();
                         $("#aclModuleSelectId").html(optionStr);
+                        // 取出当前编辑的权限点
                         var targetAcl = aclMap[aclId];
                         if (targetAcl) {
                             $("#aclId").val(aclId);
