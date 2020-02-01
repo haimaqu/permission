@@ -1,6 +1,9 @@
 package com.mmall.dao;
 
 import com.mmall.model.SysRoleAcl;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysRoleAclMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,9 @@ public interface SysRoleAclMapper {
     int updateByPrimaryKeySelective(SysRoleAcl record);
 
     int updateByPrimaryKey(SysRoleAcl record);
+
+    // 相当于传入多个角色id，分别查出他们合在一起的权限点的。。总和
+    List<Integer> getAclIdListByRoleIdList(@Param("roleIdList") List<Integer> roleIdList);
+
+
 }
