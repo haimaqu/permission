@@ -139,7 +139,7 @@
     from sys_role
     where name=#{name}
     <if test="id != null ">
-      id != #{id}
+     AND id != #{id}
     </if>
   </select>
 

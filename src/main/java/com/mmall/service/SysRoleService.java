@@ -60,7 +60,7 @@ public class SysRoleService {
     }
 
     private boolean checkExist(String name, Integer id) {
-        return sysRoleMapper.countByNameAndId(name, id) > 0;
+        return sysRoleMapper.countByName(name, id) > 0;
     }
 
 }
