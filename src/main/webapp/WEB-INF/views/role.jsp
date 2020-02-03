@@ -286,19 +286,19 @@
                 }
             });
         }
-        //
-        // function getTreeSelectedId() {
-        //     var treeObj = $.fn.zTree.getZTreeObj("roleAclTree");
-        //     var nodes = treeObj.getCheckedNodes(true);
-        //     var v = "";
-        //     for(var i = 0; i < nodes.length; i++) {
-        //         if(nodes[i].id.startsWith(aclPrefix)) {
-        //             v += "," + nodes[i].dataId;
-        //         }
-        //     }
-        //     return v.length > 0 ? v.substring(1): v;
-        // }
-        //
+
+        function getTreeSelectedId() {
+            var treeObj = $.fn.zTree.getZTreeObj("roleAclTree");
+            var nodes = treeObj.getCheckedNodes(true);
+            var v = "";
+            for(var i = 0; i < nodes.length; i++) {
+                if(nodes[i].id.startsWith(aclPrefix)) {
+                    v += "," + nodes[i].dataId;
+                }
+            }
+            return v.length > 0 ? v.substring(1): v;
+        }
+
         function renderRoleTree(aclModuleList) {
             zTreeObj = [];
             recursivePrepareTreeData(aclModuleList);
