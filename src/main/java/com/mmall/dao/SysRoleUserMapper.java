@@ -20,6 +20,10 @@ public interface SysRoleUserMapper {
 
     List<Integer> getRoleIdListByUserId(@Param("userId") int userId);
 
+//    List<Integer> getUserIdByRoleId(@Param("roleId")int roleId);
+    List<Integer> getUserIdListByRoleId(@Param("roleId")Integer roleId);
+
+
 
 
 

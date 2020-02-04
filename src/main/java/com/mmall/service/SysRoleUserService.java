@@ -1,11 +1,15 @@
 package com.mmall.service;
 
+import com.google.common.collect.Lists;
 import com.mmall.dao.SysLogMapper;
 import com.mmall.dao.SysRoleUserMapper;
 import com.mmall.dao.SysUserMapper;
+import com.mmall.model.SysUser;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class SysRoleUserService {
@@ -17,13 +21,14 @@ public class SysRoleUserService {
     @Resource
     private SysLogMapper sysLogMapper;
 
-//    public List<SysUser> getListByRoleId(int roleId) {
-//        List<Integer> userIdList = sysRoleUserMapper.getUserIdListByRoleId(roleId);
-//        if (CollectionUtils.isEmpty(userIdList)) {
-//            return Lists.newArrayList();
-//        }
-//        return sysUserMapper.getByIdList(userIdList);
-//    }
+    // 当前角色（roleId） 对应的 选中的 用户的列表
+    public List<SysUser> getListByRoleId(int roleId) {
+        List<Integer> userIdList = sysRoleUserMapper.getUserIdListByRoleId(roleId);
+        if (CollectionUtils.isEmpty(userIdList)) {
+            return Lists.newArrayList();
+        }
+        return sysUserMapper.getByIdList(userIdList);
+    }
 
 //    public void changeRoleUsers(int roleId, List<Integer> userIdList) {
 //        List<Integer> originUserIdList = sysRoleUserMapper.getUserIdListByRoleId(roleId);
