@@ -378,28 +378,28 @@
             })
         });
 
-        // $(".saveRoleAcl").click(function (e) {
-        //     e.preventDefault();
-        //     if (lastRoleId == -1) {
-        //         showMessage("保存角色与权限点的关系", "请现在左侧选择需要操作的角色", false);
-        //         return;
-        //     }
-        //     $.ajax({
-        //         url: "/sys/role/changeAcls.json",
-        //         data: {
-        //             roleId: lastRoleId,
-        //             aclIds: getTreeSelectedId()
-        //         },
-        //         type: 'POST',
-        //         success: function (result) {
-        //             if (result.ret) {
-        //                 showMessage("保存角色与权限点的关系", "操作成功", false);
-        //             } else {
-        //                 showMessage("保存角色与权限点的关系", result.msg, false);
-        //             }
-        //         }
-        //     });
-        // });
+        $(".saveRoleAcl").click(function (e) {
+            e.preventDefault();
+            if (lastRoleId == -1) {
+                showMessage("保存角色与权限点的关系", "请现在左侧选择需要操作的角色", false);
+                return;
+            }
+            $.ajax({
+                url: "/sys/role/changeAcls.json",
+                data: {
+                    roleId: lastRoleId,
+                    aclIds: getTreeSelectedId()
+                },
+                type: 'POST',
+                success: function (result) {
+                    if (result.ret) {
+                        showMessage("保存角色与权限点的关系", "操作成功", false);
+                    } else {
+                        showMessage("保存角色与权限点的关系", result.msg, false);
+                    }
+                }
+            });
+        });
 
         function updateRole(isCreate, successCallback, failCallback) {
             $.ajax({

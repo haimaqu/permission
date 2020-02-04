@@ -21,5 +21,11 @@ public interface SysRoleAclMapper {
     // 相当于传入多个角色id，分别查出他们合在一起的权限点的。。总和
     List<Integer> getAclIdListByRoleIdList(@Param("roleIdList") List<Integer> roleIdList);
 
+    // roleId不能为空，所以不能用Integer
+    int deleteByRoleId(@Param("roleId")int roleId);
+
+    void batchInsert(@Param("roleAclList") List<SysRoleAcl> roleAclList);
+
+
 
 }
