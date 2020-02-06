@@ -38,6 +38,20 @@ public class SysTreeService {
     @Resource
     private SysAclMapper sysAclMapper;
 
+    public List<AclModuleLevelDto> userAclTree(int userId) {
+        List<SysAcl> userAclList = sysCoreService.getUserAclList(userId);
+        List<AclDto> aclDtoList = Lists.newArrayList();
+        for (SysAcl acl : userAclList) {
+            AclDto dto = AclDto.adapt(acl);
+            dto.setHasAcl(true);
+            dto.setChecked(true);
+            aclDtoList.add(dto);
+        }
+        return aclListToTree(aclDtoList);
+    }
+
+
+
     // 该方法拿到的是角色对应的权限树
     public List<AclModuleLevelDto> roleTree(int roleId) {
         // 1. 当前用户已分配的权限点

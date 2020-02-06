@@ -1,13 +1,16 @@
 package com.mmall.service;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.mmall.common.RequestHolder;
 import com.mmall.dao.SysRoleMapper;
+import com.mmall.dao.SysRoleUserMapper;
 import com.mmall.exception.ParamException;
 import com.mmall.model.SysRole;
 import com.mmall.param.RoleParam;
 import com.mmall.util.BeanValidator;
 import com.mmall.util.IpUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,6 +22,9 @@ public class SysRoleService {
 
     @Resource
     private SysRoleMapper sysRoleMapper;
+
+    @Resource
+    private SysRoleUserMapper sysRoleUserMapper;
 
     /**
      * 角色名称不能重复
@@ -62,5 +68,15 @@ public class SysRoleService {
     private boolean checkExist(String name, Integer id) {
         return sysRoleMapper.countByName(name, id) > 0;
     }
+
+    public List<SysRole> getRoleListByUserId(int userId) {
+        List<Integer> roleIdList = sysRoleUserMapper.getRoleIdListByUserId(userId);
+        if (CollectionUtils.isEmpty(roleIdList)) {
+            return Lists.newArrayList();
+        }
+        return sysRoleMapper.getByIdList(roleIdList);
+    }
+
+
 
 }
