@@ -1,23 +1,23 @@
 package com.mmall.controller;
 
+
 import com.mmall.beans.PageQuery;
 import com.mmall.beans.PageResult;
 import com.mmall.common.JsonData;
 import com.mmall.model.SysUser;
 import com.mmall.param.UserParam;
 import com.mmall.service.SysUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
-
 @Controller
 @RequestMapping("/sys/user")
 public class SysUserController {
 
-    @Resource
+    @Autowired
     private SysUserService sysUserService;
 
     @RequestMapping("/save.json")

@@ -1,13 +1,14 @@
 package com.mmall.controller;
 
+
 import com.mmall.model.SysUser;
 import com.mmall.service.SysUserService;
 import com.mmall.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,7 @@ import java.io.IOException;
 @Controller
 public class UserController {
 
-    @Resource
+    @Autowired
     private SysUserService sysUserService;
 
     @RequestMapping("/logout.page")

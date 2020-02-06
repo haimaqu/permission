@@ -468,28 +468,28 @@
             });
         }
 
-        // $(".saveRoleUser").click(function (e) {
-        //     e.preventDefault();
-        //     if (lastRoleId == -1) {
-        //         showMessage("保存角色与用户的关系", "请现在左侧选择需要操作的角色", false);
-        //         return;
-        //     }
-        //     $.ajax({
-        //         url: "/sys/role/changeUsers.json",
-        //         data: {
-        //             roleId: lastRoleId,
-        //             userIds: $("#roleUserList").val() ? $("#roleUserList").val().join(",") : ''
-        //         },
-        //         type: 'POST',
-        //         success: function (result) {
-        //             if (result.ret) {
-        //                 showMessage("保存角色与用户的关系", "操作成功", false);
-        //             } else {
-        //                 showMessage("保存角色与用户的关系", result.msg, false);
-        //             }
-        //         }
-        //     });
-        // });
+        $(".saveRoleUser").click(function (e) {
+            e.preventDefault();
+            if (lastRoleId == -1) {
+                showMessage("保存角色与用户的关系", "请现在左侧选择需要操作的角色", false);
+                return;
+            }
+            $.ajax({
+                url: "/sys/role/changeUsers.json",
+                data: {
+                    roleId: lastRoleId,
+                    userIds: $("#roleUserList").val() ? $("#roleUserList").val().join(",") : ''
+                },
+                type: 'POST',
+                success: function (result) {
+                    if (result.ret) {
+                        showMessage("保存角色与用户的关系", "操作成功", false);
+                    } else {
+                        showMessage("保存角色与用户的关系", result.msg, false);
+                    }
+                }
+            });
+        });
     });
 </script>
 </body>

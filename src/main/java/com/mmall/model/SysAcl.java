@@ -14,6 +14,7 @@ import java.util.Date;
 public class SysAcl {
     private Integer id;
 
+    //
     private String code;
 
     private String name;
@@ -30,10 +31,13 @@ public class SysAcl {
 
     private String remark;
 
+    //
     private String operator;
 
+    //
     private Date operateTime;
 
+    //
     private String operateIp;
 
     public Integer getId() {

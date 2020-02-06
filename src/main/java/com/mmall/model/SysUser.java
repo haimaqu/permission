@@ -19,6 +19,7 @@ public class SysUser {
 
     private String mail;
 
+    //
     private String password;
 
     private Integer deptId;
@@ -27,10 +28,13 @@ public class SysUser {
 
     private String remark;
 
+    //
     private String operator;
 
+    //
     private Date operateTime;
 
+    //
     private String operateIp;
 
     public Integer getId() {

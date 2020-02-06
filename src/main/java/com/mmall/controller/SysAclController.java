@@ -5,19 +5,18 @@ import com.mmall.common.JsonData;
 import com.mmall.param.AclParam;
 import com.mmall.service.SysAclService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.annotation.Resource;
 
 @Controller
 @RequestMapping("/sys/acl")
 @Slf4j
 public class SysAclController {
 
-    @Resource
+    @Autowired
     private SysAclService sysAclService;
 //    @Resource
 //    private SysRoleService sysRoleService;

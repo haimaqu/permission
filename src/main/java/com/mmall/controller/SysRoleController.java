@@ -1,5 +1,6 @@
 package com.mmall.controller;
 
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mmall.common.JsonData;
@@ -7,13 +8,13 @@ import com.mmall.model.SysUser;
 import com.mmall.param.RoleParam;
 import com.mmall.service.*;
 import com.mmall.util.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,19 +25,19 @@ import java.util.stream.Collectors;
 public class SysRoleController {
 
 
-    @Resource
+    @Autowired
     private SysRoleService sysRoleService;
 
-    @Resource
+    @Autowired
     private SysTreeService sysTreeService;
 
-    @Resource
+    @Autowired
     private SysRoleAclService sysRoleAclService;
 
-    @Resource
+    @Autowired
     private SysRoleUserService sysRoleUserService;
 
-    @Resource
+    @Autowired
     private SysUserService sysUserService;
 
     @RequestMapping("/role.page")
@@ -70,6 +71,7 @@ public class SysRoleController {
 
         return JsonData.success(sysTreeService.roleTree(roleId));
     }
+
     @RequestMapping("/changeAcls.json")
     @ResponseBody
     public JsonData changeAcls(@RequestParam("roleId") int roleId,@RequestParam(value = "aclIds",required = false,defaultValue = "") String aclIds) {
@@ -77,6 +79,15 @@ public class SysRoleController {
         sysRoleAclService.changeRoleAcls(roleId, aclIdList);
         return JsonData.success();
     }
+
+    @RequestMapping("/changeUsers.json")
+    @ResponseBody
+    public JsonData changeUsers(@RequestParam("roleId") int roleId,@RequestParam(value = "userIds",required = false,defaultValue = "") String userIds) {
+        List<Integer> userIdList = StringUtil.splitToListInt(userIds);
+        sysRoleUserService.changeRoleUsers(roleId, userIdList);
+        return JsonData.success();
+    }
+
 
     @RequestMapping("/users.json")
     @ResponseBody

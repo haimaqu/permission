@@ -11,6 +11,8 @@ public class AdminController {
     // 登录成功之后直接跳转页面的url
     @RequestMapping("/index.page")
     public ModelAndView index() {
+        System.out.println(9999);
+        System.out.println(System.getProperty("java.version"));
         return new ModelAndView("admin");
     }
 
