@@ -1,13 +1,17 @@
 package com.mmall.service;
 
 import com.google.common.collect.Lists;
+import com.mmall.beans.CacheKeyConstants;
 import com.mmall.common.RequestHolder;
 import com.mmall.dao.SysAclMapper;
 import com.mmall.dao.SysRoleAclMapper;
 import com.mmall.dao.SysRoleUserMapper;
 import com.mmall.model.SysAcl;
 import com.mmall.model.SysUser;
+import com.mmall.util.JsonMapper;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,6 +32,9 @@ public class SysCoreService {
 
     @Resource
     private SysRoleAclMapper sysRoleAclMapper;
+
+    @Resource
+    private SysCacheService sysCacheService;
 
     // 获取当前用户权限列表
     public List<SysAcl> getCurrentUserAclList() {
@@ -88,9 +95,9 @@ public class SysCoreService {
             return true;
         }
 
-//        List<SysAcl> userAclList = getCurrentUserAclListFromCache();
+        List<SysAcl> userAclList = getCurrentUserAclListFromCache();
         // 得到需要校验的权限点的列表
-        List<SysAcl> userAclList = getCurrentUserAclList();
+//        List<SysAcl> userAclList = getCurrentUserAclList();
         Set<Integer> userAclIdSet = userAclList.stream().map(acl -> acl.getId()).collect(Collectors.toSet());
 
         boolean hasValidAcl = false;
@@ -108,6 +115,23 @@ public class SysCoreService {
         if (!hasValidAcl) {
             return true;
         }
-        return true;
+        // 前面几次提交这个都没改成false
+        return false;
     }
+
+    public List<SysAcl> getCurrentUserAclListFromCache() {
+        int userId = RequestHolder.getCurrentUser().getId();
+        String cacheValue = sysCacheService.getFromCache(CacheKeyConstants.USER_ACLS, String.valueOf(userId));
+        if (StringUtils.isBlank(cacheValue)) {
+            List<SysAcl> aclList = getCurrentUserAclList();
+            if (CollectionUtils.isNotEmpty(aclList)) {
+                sysCacheService.saveCache(JsonMapper.obj2String(aclList), 600, CacheKeyConstants.USER_ACLS, String.valueOf(userId));
+            }
+            return aclList;
+        }
+        // 将cacheValue转换为List
+        return JsonMapper.string2Obj(cacheValue, new TypeReference<List<SysAcl>>() {
+        });
+    }
+
 }

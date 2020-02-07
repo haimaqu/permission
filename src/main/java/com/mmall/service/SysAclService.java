@@ -10,7 +10,10 @@ import com.mmall.model.SysAcl;
 import com.mmall.param.AclParam;
 import com.mmall.util.BeanValidator;
 import com.mmall.util.IpUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.ShardedJedisPool;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
@@ -76,4 +79,6 @@ public class SysAclService {
         }
         return PageResult.<SysAcl>builder().build();
     }
+
+
 }

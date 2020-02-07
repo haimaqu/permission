@@ -1,4 +1,4 @@
-package com.mmall.common;
+package com.mmall.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,9 +20,9 @@ public class RedisPool {
 
     public void safeClose(ShardedJedis shardedJedis) {
         try {
-           if (shardedJedis != null) {
-               shardedJedis.close();
-           }
+            if (shardedJedis != null) {
+                shardedJedis.close();
+            }
         } catch (Exception e) {
             log.error("return redis resource exception", e);
         }

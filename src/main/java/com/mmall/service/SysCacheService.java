@@ -2,7 +2,6 @@ package com.mmall.service;
 
 import com.google.common.base.Joiner;
 import com.mmall.beans.CacheKeyConstants;
-import com.mmall.common.RedisPool;
 import com.mmall.util.JsonMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,7 +30,7 @@ public class SysCacheService {
             String cacheKey = generateCacheKey(prefix, keys);
             // 再拿到资源
             shardedJedis = redisPool.instance();
-            //
+            // 把键  超时秒  值  放入redis
             shardedJedis.setex(cacheKey, timeoutSeconds, toSavedValue);
         } catch (Exception e) {
             log.error("save cache exception, prefix:{}, keys:{}", prefix.name(), JsonMapper.obj2String(keys), e);
@@ -40,11 +39,14 @@ public class SysCacheService {
         }
     }
 
+    // 获取redis中的缓存
     public String getFromCache(CacheKeyConstants prefix, String... keys) {
         ShardedJedis shardedJedis = null;
+        // 生成对应的key
         String cacheKey = generateCacheKey(prefix, keys);
         try {
             shardedJedis = redisPool.instance();
+            // 根据key获取redis中的值
             String value = shardedJedis.get(cacheKey);
             return value;
         } catch (Exception e) {
@@ -55,11 +57,17 @@ public class SysCacheService {
         }
     }
 
+    // 生成缓存的键
     private String generateCacheKey(CacheKeyConstants prefix, String... keys) {
         String key = prefix.name();
         if (keys != null && keys.length > 0) {
             key += "_" + Joiner.on("_").join(keys);
         }
+
+        System.out.println("那个key=" + key);
+
         return key;
     }
+
+
 }
