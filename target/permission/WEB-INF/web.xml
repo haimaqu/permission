@@ -114,6 +114,7 @@
       <param-value>/sys/user/noAuth.page,/login.page</param-value>
     </init-param>
   </filter>
+
   <filter-mapping>
     <filter-name>aclControlFilter</filter-name>
     <url-pattern>/sys/*</url-pattern>
