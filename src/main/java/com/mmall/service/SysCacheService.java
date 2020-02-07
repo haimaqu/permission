@@ -27,8 +27,11 @@ public class SysCacheService {
         }
         ShardedJedis shardedJedis = null;
         try {
+            // 先生成对应的key
             String cacheKey = generateCacheKey(prefix, keys);
+            // 再拿到资源
             shardedJedis = redisPool.instance();
+            //
             shardedJedis.setex(cacheKey, timeoutSeconds, toSavedValue);
         } catch (Exception e) {
             log.error("save cache exception, prefix:{}, keys:{}", prefix.name(), JsonMapper.obj2String(keys), e);
@@ -36,21 +39,21 @@ public class SysCacheService {
             redisPool.safeClose(shardedJedis);
         }
     }
-//
-//    public String getFromCache(CacheKeyConstants prefix, String... keys) {
-//        ShardedJedis shardedJedis = null;
-//        String cacheKey = generateCacheKey(prefix, keys);
-//        try {
-//            shardedJedis = redisPool.instance();
-//            String value = shardedJedis.get(cacheKey);
-//            return value;
-//        } catch (Exception e) {
-//            log.error("get from cache exception, prefix:{}, keys:{}", prefix.name(), JsonMapper.obj2String(keys), e);
-//            return null;
-//        } finally {
-//            redisPool.safeClose(shardedJedis);
-//        }
-//    }
+
+    public String getFromCache(CacheKeyConstants prefix, String... keys) {
+        ShardedJedis shardedJedis = null;
+        String cacheKey = generateCacheKey(prefix, keys);
+        try {
+            shardedJedis = redisPool.instance();
+            String value = shardedJedis.get(cacheKey);
+            return value;
+        } catch (Exception e) {
+            log.error("get from cache exception, prefix:{}, keys:{}", prefix.name(), JsonMapper.obj2String(keys), e);
+            return null;
+        } finally {
+            redisPool.safeClose(shardedJedis);
+        }
+    }
 
     private String generateCacheKey(CacheKeyConstants prefix, String... keys) {
         String key = prefix.name();
