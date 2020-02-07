@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 专门获取相关角色或用户权限的service
@@ -67,4 +69,38 @@ public class SysCoreService {
         return true;
     }
 
+
+    // 一个用户是否有指定url访问权限的方法
+    public boolean hasUrlAcl(String url) {
+        // 是否是超级管理员
+        if (isSuperAdmin()) {
+            return true;
+        }
+        List<SysAcl> aclList = sysAclMapper.getByUrl(url);
+        if (CollectionUtils.isEmpty(aclList)) {
+            return true;
+        }
+
+//        List<SysAcl> userAclList = getCurrentUserAclListFromCache();
+        // 得到需要校验的权限点的列表
+        List<SysAcl> userAclList = getCurrentUserAclList();
+        Set<Integer> userAclIdSet = userAclList.stream().map(acl -> acl.getId()).collect(Collectors.toSet());
+
+        boolean hasValidAcl = false;
+        // 规则：只要有一个权限点有权限，那么我们就认为有访问权限
+        for (SysAcl acl : aclList) {
+            // 判断一个用户是否具有某个权限点的访问权限
+            if (acl == null || acl.getStatus() != 1) { // 权限点无效
+                continue;
+            }
+            hasValidAcl = true;
+            if (userAclIdSet.contains(acl.getId())) {
+                return true;
+            }
+        }
+        if (!hasValidAcl) {
+            return true;
+        }
+        return true;
+    }
 }
