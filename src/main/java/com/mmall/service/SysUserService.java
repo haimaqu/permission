@@ -25,6 +25,10 @@ public class SysUserService {
     @Resource
     private SysUserMapper sysUserMapper;
 
+    @Resource
+    private SysLogService sysLogService;
+
+
     public void save(UserParam param) {
         BeanValidator.check(param);
         if(checkTelephoneExist(param.getTelephone(), param.getId())) {
@@ -47,6 +51,7 @@ public class SysUserService {
         // TODO: sendEmail
 
         sysUserMapper.insertSelective(user);
+        sysLogService.saveUserLog(null, user);
     }
 
 
@@ -69,6 +74,7 @@ public class SysUserService {
 
         // updateByPrimaryKeySelective是根据值进行更新的，有值才更新，所以after里password值没有的话，就不会更新，即可以不写password
         sysUserMapper.updateByPrimaryKeySelective(after);
+        sysLogService.saveUserLog(before, after);
 
     }
 

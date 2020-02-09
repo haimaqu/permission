@@ -27,6 +27,9 @@ public class SysDeptService {
     @Resource
     private SysUserMapper sysUserMapper;
 
+    @Resource
+    private SysLogService sysLogService;
+
     public void save(DeptParam param) {
         BeanValidator.check(param);
         if(checkExist(param.getParentId(), param.getName(), param.getId())) {
@@ -43,7 +46,7 @@ public class SysDeptService {
         dept.setOperateTime(new Date());
         // insertSelective() 先进行判断，没有值的时候不进行处理，只插入有值的值
         sysDeptMapper.insertSelective(dept);
-//        sysLogService.saveDeptLog(null    , dept);
+        sysLogService.saveDeptLog(null    , dept);
     }
 
     public void update(DeptParam param) {
@@ -70,7 +73,7 @@ public class SysDeptService {
 //        after.setOperateTime(new Date());
 //
         updateWithChild(before, after);
-//        sysLogService.saveDeptLog(before, after);
+        sysLogService.saveDeptLog(before, after);
     }
 
     @Transactional

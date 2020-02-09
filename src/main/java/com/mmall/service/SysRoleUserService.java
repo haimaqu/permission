@@ -28,6 +28,9 @@ public class SysRoleUserService {
     @Resource
     private SysLogMapper sysLogMapper;
 
+    @Resource
+    private SysLogService sysLogService;
+
     // 当前角色（roleId） 对应的 选中的 用户的列表
     public List<SysUser> getListByRoleId(int roleId) {
         List<Integer> userIdList = sysRoleUserMapper.getUserIdListByRoleId(roleId);
@@ -49,7 +52,7 @@ public class SysRoleUserService {
             }
         }
         updateRoleUsers(roleId, userIdList);
-//        saveRoleUserLog(roleId, originUserIdList, userIdList);
+        sysLogService.saveRoleUserLog(roleId, originUserIdList, userIdList);
     }
 
     @Transactional
