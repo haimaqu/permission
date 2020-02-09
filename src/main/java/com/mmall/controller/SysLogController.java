@@ -6,6 +6,7 @@ import com.mmall.param.SearchLogParam;
 import com.mmall.service.SysLogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,10 +24,16 @@ public class SysLogController {
         return new ModelAndView("log");
     }
 
+    @RequestMapping("/recover.json")
+    @ResponseBody
+    public JsonData recover(@RequestParam("id") int id) {
+        sysLogService.recover(id);
+        return JsonData.success();
+    }
+
     @RequestMapping("/page.json")
     @ResponseBody
     public JsonData searchPage(SearchLogParam param, PageQuery pageQuery) {
-
         return JsonData.success(sysLogService.searchPageList(param, pageQuery));
     }
 }
