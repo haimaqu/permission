@@ -1,14 +1,22 @@
 package com.mmall.service;
 
 import com.mmall.beans.LogType;
+import com.mmall.beans.PageQuery;
+import com.mmall.beans.PageResult;
 import com.mmall.common.RequestHolder;
 import com.mmall.dao.SysLogMapper;
+import com.mmall.dto.SearchLogDto;
+import com.mmall.exception.ParamException;
 import com.mmall.model.*;
+import com.mmall.param.SearchLogParam;
+import com.mmall.util.BeanValidator;
 import com.mmall.util.IpUtil;
 import com.mmall.util.JsonMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +25,39 @@ public class SysLogService {
 
     @Resource
     private SysLogMapper sysLogMapper;
+
+    //  搜索查询
+    public PageResult<SysLogWithBLOBs> searchPageList(SearchLogParam param, PageQuery page) {
+        BeanValidator.check(page);
+        SearchLogDto dto = new SearchLogDto();
+        dto.setType(param.getType());
+        if (StringUtils.isNotBlank(param.getBeforeSeg())) {
+            dto.setBeforeSeg("%" + param.getBeforeSeg() + "%");
+        }
+        if (StringUtils.isNotBlank(param.getAfterSeg())) {
+            dto.setAfterSeg("%" + param.getAfterSeg() + "%");
+        }
+        if (StringUtils.isNotBlank(param.getOperator())) {
+            dto.setOperator("%" + param.getOperator() + "%");
+        }
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            if (StringUtils.isNotBlank(param.getFromTime())) {
+                dto.setFromTime(dateFormat.parse(param.getFromTime()));
+            }
+            if (StringUtils.isNotBlank(param.getToTime())) {
+                dto.setToTime(dateFormat.parse(param.getToTime()));
+            }
+        } catch (Exception e) {
+            throw new ParamException("传入的日期格式有问题，正确格式为：yyyy-MM-dd HH:mm:ss");
+        }
+        int count = sysLogMapper.countBySearchDto(dto);
+        if (count > 0) {
+            List<SysLogWithBLOBs> logList = sysLogMapper.getPageListBySearchDto(dto, page);
+            return PageResult.<SysLogWithBLOBs>builder().total(count).data(logList).build();
+        }
+        return PageResult.<SysLogWithBLOBs>builder().build();
+    }
 
 
     public void saveDeptLog(SysDept before, SysDept after) {
